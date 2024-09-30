@@ -101,7 +101,11 @@ namespace ValidationTask
             bool checkLowCase = false;
             bool checkNonLetter = false;
             // Check password is at least 8 characters in length
-            if (password.Length < 8) { return false; }
+            if (password.Length < 8)
+            {
+                Console.WriteLine("Password must be at least 8 characters in length");
+                return false;
+            }
             for (int i = 0; i < password.Length; i++)
             {
                 int code = Convert.ToChar(password[i]);
@@ -136,11 +140,11 @@ namespace ValidationTask
                int b = Convert.ToInt32(Convert.ToChar(password[i + 1]));
                int c = Convert.ToInt32(Convert.ToChar(password[i + 2]));
                if ((((a >= 65 && a <= 90) || (a >= 97 && a <= 122)) && ((b >= 65 && b <= 90) || (b >= 97 && b <= 122)) && ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)))
-                    && ((a + 1 == b && (b + 1 == c || b + 33 == c || b - 31 == c)) || (a + 33 == b && (b + 1 == c || b - 31 == c)) || (a - 31 == b && (b + 33 == c || b + 1 == c)))
+                    && (((a + 1 == b && (b + 1 == c || b + 33 == c || b - 31 == c)) || (a + 33 == b && (b + 1 == c || b - 31 == c)) || (a - 31 == b && (b + 33 == c || b + 1 == c)))
                     || ((a - 1 == b && (b - 1 == c || b + 31 == c || b - 33 == c)) || (a + 31 == b && (b - 1 == c || b - 33 == c)) || (a - 33 == b && (b + 31 == c || b - 1 == c)))
-                    || ((a == b && (b == c || b + 32 == c || b - 32 == c)) || (a + 32 == b && (b == c || b - 32 == c)) || (a - 32 == b && (b + 32 == c || b == c))))             
+                    || ((a == b && (b == c || b + 32 == c || b - 32 == c)) || (a + 32 == b && (b == c || b - 32 == c)) || (a - 32 == b && (b + 32 == c || b == c)))))             
                 {
-                    Console.WriteLine("Password contains more than 2 consecutive or repeating letters");
+                    Console.WriteLine("Password contains more than 2 consecutive or repeating letters  " + a + " " + b + " " + c);
                     return false;
                 }
                
@@ -173,7 +177,7 @@ namespace ValidationTask
                     countAt++;
                     positionAt = i;
                 }
-                if (c == 46) 
+                else if (c == 46) 
                 {
                     if (countDot < positionDots.Length) 
                     {
@@ -181,7 +185,7 @@ namespace ValidationTask
                         countDot++;
                     }
                 }
-                if ((c > 32 && c < 65) || c > 122 || (c > 90 && c < 97) && c != 64 && c!= 46)
+                else if ((c > 32 && c < 65) || c > 122 || (c > 90 && c < 97) && c != 64 && c!= 46)
                 {
                     Console.WriteLine( "Email can only contain @ . and letters" );
                     return false;
@@ -198,6 +202,11 @@ namespace ValidationTask
                 return false;
             }
             if ( positionDots[0] < 2 )
+            {
+                Console.WriteLine("Email must have at least 2 characters followed by a .");
+                return false;
+            }
+            if (positionDots[countDot - 1] > email.Length - 2)
             {
                 Console.WriteLine("Email must have at least 2 characters followed by a .");
                 return false;
